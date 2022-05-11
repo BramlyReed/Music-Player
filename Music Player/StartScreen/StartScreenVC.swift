@@ -8,6 +8,7 @@ class StartScreenVC: UIViewController {
     let table = UITableView()
     table.register(MusicCell.self, forCellReuseIdentifier: MusicCell.identifier)
     table.rowHeight = 100
+    table.isUserInteractionEnabled = true
     return table
   }()
   private var songsData = [Song]()
@@ -48,7 +49,14 @@ extension StartScreenVC: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
     //present player with music
     let position = indexPath.item
-    navigationController?.present(PlayerViewController(), animated: true)
+    let vc = PlayerViewController()
+    vc.songsData = [
+      Song(name: "song1", albumName: "so1", artistName: "ЕгорКрид", imageName: "", trackName: "song1"),
+      Song(name: "song2", albumName: "so2", artistName: "ЕгорКрид", imageName: "", trackName: "song2"),
+      Song(name: "song3", albumName: "so3", artistName: "ЕгорКрид", imageName: "", trackName: "song3")
+    ]
+    vc.position = position
+    navigationController?.present(vc, animated: true)
   }
   
   private func addTableView() {
